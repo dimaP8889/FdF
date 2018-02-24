@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   ft_strjoin_freemem.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/21 16:13:34 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/21 16:18:29 by dpogrebn         ###   ########.fr       */
+/*   Created: 2018/02/20 21:13:38 by dpogrebn          #+#    #+#             */
+/*   Updated: 2018/02/20 21:13:39 by dpogrebn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "./includes/libft.h"
 
-int 	main(int ac, char **av)
+char	*ft_strjoin_freemem(char **s1, char **s2)
 {
-	ac = 0;
-	t_mlx		data;
-	//t_params	*params;
-	int count;
-	int fd;
 	char *str;
+	char *str1;
 
-	str = "0XAA";
-	count = 0;
-	data.mlx = mlx_init();
-	data.wnd = mlx_new_window(data.mlx, 1000, 1000, "mlx 42");
-	fd = open(av[1], O_RDONLY);
-	printf("%i\n", ft_atoi_base(str, 16)); 
-	//ft_parse(fd);
-	//mlx_mouse_hook(data.wnd, ft_make_line, &data);
-	//mlx_loop(data.mlx);
+	if (s1 && s2)
+	{
+		str = (char *)malloc(sizeof(char)
+			* (ft_strlen(*s1) + ft_strlen(*s2) + 1));
+		if (str == NULL)
+			return (NULL);
+		str1 = str;
+		str = ft_strcpy(str, (char *)*s1);
+		str = ft_strcat(str, (char *)*s2);
+		free(*s1);
+		free(*s2);
+		return (str);
+	}
 	return (0);
 }

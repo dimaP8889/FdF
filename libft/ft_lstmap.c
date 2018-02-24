@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/21 16:13:34 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/21 16:18:29 by dpogrebn         ###   ########.fr       */
+/*   Created: 2017/11/14 23:29:35 by dpogrebn          #+#    #+#             */
+/*   Updated: 2017/11/14 23:29:36 by dpogrebn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "./includes/libft.h"
 
-int 	main(int ac, char **av)
+t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	ac = 0;
-	t_mlx		data;
-	//t_params	*params;
-	int count;
-	int fd;
-	char *str;
+	t_list	*new;
 
-	str = "0XAA";
-	count = 0;
-	data.mlx = mlx_init();
-	data.wnd = mlx_new_window(data.mlx, 1000, 1000, "mlx 42");
-	fd = open(av[1], O_RDONLY);
-	printf("%i\n", ft_atoi_base(str, 16)); 
-	//ft_parse(fd);
-	//mlx_mouse_hook(data.wnd, ft_make_line, &data);
-	//mlx_loop(data.mlx);
-	return (0);
+	new = malloc(sizeof(t_list));
+	if (lst && new && f)
+	{
+		new = f(lst);
+		lst = lst->next;
+		while (lst)
+		{
+			ft_lstaddlast(&new, f(lst));
+			lst = lst->next;
+		}
+		return (new);
+	}
+	return (NULL);
 }

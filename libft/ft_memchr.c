@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/21 16:13:34 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/21 16:18:29 by dpogrebn         ###   ########.fr       */
+/*   Created: 2017/11/02 22:46:13 by dpogrebn          #+#    #+#             */
+/*   Updated: 2017/11/02 22:46:14 by dpogrebn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "./includes/libft.h"
 
-int 	main(int ac, char **av)
+void	*ft_memchr(const void *s, int c, size_t len)
 {
-	ac = 0;
-	t_mlx		data;
-	//t_params	*params;
-	int count;
-	int fd;
-	char *str;
+	size_t	i;
 
-	str = "0XAA";
-	count = 0;
-	data.mlx = mlx_init();
-	data.wnd = mlx_new_window(data.mlx, 1000, 1000, "mlx 42");
-	fd = open(av[1], O_RDONLY);
-	printf("%i\n", ft_atoi_base(str, 16)); 
-	//ft_parse(fd);
-	//mlx_mouse_hook(data.wnd, ft_make_line, &data);
-	//mlx_loop(data.mlx);
-	return (0);
+	i = 0;
+	while (i < len)
+	{
+		if (((unsigned char *)s)[i] == (unsigned char)c)
+			return ((void *)&s[i]);
+		i++;
+	}
+	return (NULL);
 }

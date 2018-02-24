@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.c                                              :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/21 16:13:34 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/21 16:18:29 by dpogrebn         ###   ########.fr       */
+/*   Created: 2017/11/03 16:19:52 by dpogrebn          #+#    #+#             */
+/*   Updated: 2017/11/03 16:19:54 by dpogrebn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "./includes/libft.h"
 
-int 	main(int ac, char **av)
+int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	ac = 0;
-	t_mlx		data;
-	//t_params	*params;
-	int count;
-	int fd;
-	char *str;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-	str = "0XAA";
-	count = 0;
-	data.mlx = mlx_init();
-	data.wnd = mlx_new_window(data.mlx, 1000, 1000, "mlx 42");
-	fd = open(av[1], O_RDONLY);
-	printf("%i\n", ft_atoi_base(str, 16)); 
-	//ft_parse(fd);
-	//mlx_mouse_hook(data.wnd, ft_make_line, &data);
-	//mlx_loop(data.mlx);
+	str1 = (unsigned char *)s1;
+	str2 = (unsigned char *)s2;
+	while (n-- > 0)
+	{
+		if (*str1 != *str2)
+			return (*str1 - *str2);
+		str1++;
+		str2++;
+	}
 	return (0);
 }
