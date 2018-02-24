@@ -47,6 +47,5 @@ typedef struct 	s_grad
 	double		r_delta;
 	double		g_delta;
 	double		b_delta;
-	int			check;
 }				t_grad;
 #endif

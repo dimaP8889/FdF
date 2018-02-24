@@ -12,55 +12,53 @@
 
 #include "fdf.h"
 
+int 	ft_make_col(int b_start, int r_start, int g_start)
+{
+	int ret;
+	g_start <<= 8;
+	r_start <<= 16;
+	ret = r_start | g_start | b_start;
+	return (ret);
+}
+
 t_grad	*ft_find_delta(t_mlx *data, int moves, int fin_col)
 {
 	t_grad *grad;
 
 	grad = (t_grad *)malloc(sizeof(t_grad));
 	grad->b_start = (data->col) & 255;
-	grad->g_start = (data->col) >> 16;
-	grad->g_start = (data->col) & 255;
-	grad->r_start = (data->col) >> 24;
+	grad->g_start = (data->col) >> 8;
+	grad->g_start &= 255;
+	grad->r_start = (data->col) >> 16;
 	grad->b_to = fin_col & 255;
-	grad->g_to = fin_col >> 16;
-	grad->g_to = fin_col & 255;
-	grad->r_to = fin_col >> 24;
+	grad->g_to = fin_col >> 8;
+	grad->g_to = grad->g_to & 255;
+	grad->r_to = fin_col >> 16;
 	grad->r_delta = (((double)grad->r_start) - ((double)grad->r_to)) / (double)moves;
 	grad->g_delta = (((double)grad->g_start) - ((double)grad->g_to)) / (double)moves;
-	grad->b_delta = (((double)grad->b_start) - ((double)grad->b_to)) / (double)moves;	
-	// printf("r_start :%i\n", grad->r_start);
-	// printf("g_start :%i\n", grad->g_start);
-	// printf("b_start :%i\n", grad->b_start);
-	// printf("r_to :%i\n", grad->r_to);
-	// printf("g_to :%i\n", grad->g_to);
-	// printf("b_to :%i\n", grad->b_to);
-	// printf("\n");
-	printf("%f\n", grad->r_delta);
-	printf("%f\n", grad->g_delta);
-	printf("%f\n", grad->b_delta);
-	// printf("%f\n", grad->g_delta);
-	// printf("%f\n", grad->b_delta);
+	grad->b_delta = (((double)grad->b_start) - ((double)grad->b_to)) / (double)moves;
 	data->check = 1;
 	return (grad);
 }
 
-int 	ft_grad(int fin_col, int *moves, t_mlx *data)
+int 	ft_grad(int fin_col, int moves, t_mlx *data)
 {
 	static t_grad 	*grad;
-	int 			r_coun; 
+	static 	double 		r;
+	static 	double		g;
+	static 	double		b;
 
 	if (!data->check)
 	{
-		grad = ft_find_delta(data, *moves, fin_col);
+		grad = ft_find_delta(data, moves, fin_col);
+		r = grad->r_start;
+		g = grad->g_start;
+		b = grad->b_start;
 	}
-	grad->b_start += 
-	
-
-
-
-
-	data->col++;
-
+	b -= grad->b_delta;
+	r -= grad->r_delta;
+	g -= grad->g_delta;
+	data->col = ft_make_col((int)b, (int)r, (int)g);
 	return (data->col);
 }
 
@@ -80,7 +78,7 @@ int		ft_finnish_x(t_mlx data, int x, int y)
 	delta *= (y > data.y ? 1 : -1);
 	while (data.x != x)
 	{
-		mlx_pixel_put(data.mlx, data.wnd, data.x, (int)(y0), ft_grad(0xFF0000, &dif_x, &data));
+		mlx_pixel_put(data.mlx, data.wnd, data.x, (int)(y0), ft_grad(0x842684, dif_x, &data));
 		data.x += sign;
 		y0 += delta;
 	}
@@ -103,7 +101,7 @@ int		ft_finnish_y(t_mlx data, int x, int y)
 	delta *= (x > data.x ? 1 : -1);
 	while (data.y != y)
 	{
-		mlx_pixel_put(data.mlx, data.wnd, (int)(x0), data.y, ft_grad(0xFF0000, &dif_x, &data));
+		mlx_pixel_put(data.mlx, data.wnd, (int)(x0), data.y, ft_grad(0x842684, dif_y, &data));
 		data.y += sign;
 		x0 += delta;
 	}
@@ -117,8 +115,8 @@ int		ft_start(int button, int x, int y, void *d)
 	data = ((t_mlx*)d);
 	if (button == 1)
 	{
-		mlx_pixel_put(data->mlx, data->wnd, x, y, 0xFFFFFF);
-		data->col = 0xFFFFFF;
+		mlx_pixel_put(data->mlx, data->wnd, x, y, 0x597548);
+		data->col = 0x597548;
 		data->x = x;
 		data->y = y;
 	}
