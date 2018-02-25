@@ -17,7 +17,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "mlx.h"
+# include "minilibx/mlx.h"
 # include "libft/includes/libft.h"
 # include "libft/includes/get_next_line.h"
 # include "libft/ft_printf/ft_printf.h"
@@ -27,8 +27,8 @@ typedef struct 	s_params
 	int 			x;
 	int 			y;
 	int 			z;
+	int				end;
 	int				col;
-	struct t_params	*next;
 }				t_params;
 
 typedef struct 	s_mlx
@@ -40,7 +40,7 @@ typedef struct 	s_mlx
 	int 			y;
 	int 			z;
 	int				col;
-	struct t_params	*params;
+	t_params	**params;
 }				t_mlx;
 
 typedef struct 	s_grad
@@ -58,7 +58,7 @@ typedef struct 	s_grad
 
 int 			ft_grad(int fin_col, int moves, t_mlx *data);
 int				ft_make_line(int button, int x, int y, void *d);
-t_params		*ft_parse(int fd);
+t_params		**ft_parse(int fd, int size);
 int				ft_atoi_base(const char *str1, int base);
 
 #endif
