@@ -35,6 +35,8 @@ int 	ft_find_size(int fd)
 	return (size);
 }
 
+//надо фришить структуры
+
 int 	main(int ac, char **av)
 {
 	ac = 0;
@@ -52,28 +54,20 @@ int 	main(int ac, char **av)
 	size = ft_find_size(fd);
 	close(fd);
 	fd = open(av[1], O_RDONLY);
-	//printf("%i\n", ft_atoi_base(str, 16)); 
 	data.params = ft_parse(fd, size);
-	close(fd);
-	while(1)
+	while (data.params[y])
 	{
-		while (data.params[y])
+		while (!data.params[y][x].end)
 		{
-			while (data.params[y][x].end != 1)
-			{
-				printf("x: %i\n", data.params[y][x].x);
-				printf("y: %i\n", data.params[y][x].y);
-				printf("z: %i\n", data.params[y][x].z);
-				printf("col :%i\n", data.params[y][x].col);
-				x++;
-			}
-			x = 0;
-			y++;
+			printf("%#x\n", data.params[y][x].col);
+			x++;
 		}
-		y = 0;
+		x = 0;
+		y++;
 	}
+	close(fd);
+	ft_make_line(data.params, data);
 	//mlx_mouse_hook(data.wnd, ft_make_line, &data);
-
 	mlx_loop(data.mlx);
 	return (0);
 }

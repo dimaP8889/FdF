@@ -26,11 +26,12 @@ static	int		ft_correct(int base, int num)
 	char 	*max_base_low;
 	char 	*max_base_high;
 	int		coun;
-	(void)base;
 
 	coun = 0;
 	max_base_low = "0123456789abcdef";
 	max_base_high = "0123456789ABCDEF";
+	if (!num)
+		return (0);
 	if (!ft_strchr(max_base_low, num) && !ft_strchr(max_base_high, num))
 		return (0);
 	if (ft_strchr(max_base_low, num))

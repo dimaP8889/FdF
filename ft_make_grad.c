@@ -21,7 +21,7 @@ static int 	ft_make_col(int b_start, int r_start, int g_start)
 	return (ret);
 }
 
-static t_grad	*ft_find_delta(t_mlx *data, int moves, int fin_col)
+static t_grad	*ft_find_delta(t_params *data, int moves, int fin_col)
 {
 	t_grad *grad;
 
@@ -37,27 +37,31 @@ static t_grad	*ft_find_delta(t_mlx *data, int moves, int fin_col)
 	grad->r_delta = (((double)grad->r_start) - ((double)grad->r_to)) / (double)moves;
 	grad->g_delta = (((double)grad->g_start) - ((double)grad->g_to)) / (double)moves;
 	grad->b_delta = (((double)grad->b_start) - ((double)grad->b_to)) / (double)moves;
-	data->check = 1;
 	return (grad);
 }
 
-int 	ft_grad(int fin_col, int moves, t_mlx *data)
+int 	ft_grad(int fin_col, int moves, t_params *data)
 {
-	static t_grad 	*grad;
+	t_grad 	*grad;
 	static 	double 		r;
 	static 	double		g;
 	static 	double		b;
+	static int i;
 
-	if (!data->check)
+	grad = (t_grad*)malloc(sizeof(t_grad));	
+	if (!i)
 	{
 		grad = ft_find_delta(data, moves, fin_col);
 		r = grad->r_start;
 		g = grad->g_start;
 		b = grad->b_start;
+		i++;
 	}
+	// printf("r: %#x\n", data->col);
 	b -= grad->b_delta;
 	r -= grad->r_delta;
 	g -= grad->g_delta;
+
 	data->col = ft_make_col((int)b, (int)r, (int)g);
 	return (data->col);
 }
