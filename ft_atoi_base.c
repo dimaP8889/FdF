@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/24 22:37:35 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/24 22:37:36 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/02/26 22:35:31 by dpogrebn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ static	int		result(unsigned char *str, int is_neg, int base)
 		else
 			res = (*(str++) - 87) + res * base;
 	}
-	if (!ft_correct(base, *str) && *str)
-		return (0);
+	// if (!ft_correct(base, *str) && *str)
+	// 	return (0);
 	return (is_neg * res);
 }
 
@@ -94,11 +94,6 @@ int				ft_atoi_base(const char *str1, int base)
 		if (base != 10)
 			return (0);
 		str++;
-	}
-	if (!ft_correct(base, *str))
-	{
-		ft_printf("wrong input\n");
-		exit(1);
 	}
 	res = result(str, is_neg, base);
 	return (res);

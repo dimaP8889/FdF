@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 14:36:48 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/22 14:36:50 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/02/26 22:21:00 by dpogrebn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,16 @@ typedef struct 	s_grad
 	double		b_delta;
 }				t_grad;
 
+typedef struct 	s_sizes
+{
+	int 			x;
+	int 			y;
+	int				z;
+}				t_sizes;
+
 int 			ft_grad(int fin_col, int moves, t_params *data);
 int				ft_draw(int button, int x, int y, void *d);
-t_params		**ft_parse(int fd, int size);
+t_params		**ft_parse(int fd, t_sizes sizes);
 int				ft_atoi_base(const char *str1, int base);
 void			ft_make_line(t_params **params, t_mlx data);
 

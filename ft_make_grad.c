@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_grad.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/24 17:40:06 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/24 17:40:06 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/02/26 23:15:58 by dpogrebn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ int 	ft_grad(int start_col, int moves, t_params *data)
 
 	if (!i)
 	{
+		// if (data->col != 0xffffff)
+		// {
+		// 	printf("num :%i\n", data->y);
+		// 	printf("col :%#x\n", data->col);
+		// 	printf("\n");
+		// }
 		grad = ft_find_delta(data, moves, start_col);
 		r = grad->r_start;
 		g = grad->g_start;
