@@ -12,96 +12,97 @@
 
 #include "fdf.h"
 
-static int		ft_finnish_x(t_params params, t_mlx data, int x, int y)
+static int		ft_finnish_x(t_params params, t_mlx data, int x, int y, int col)
 {
 	double 	delta;
 	double 	y0;
+	int		x0;
 	int 	sign;
 	int 	dif_x;
 	int 	dif_y;
 
-	
-	y0 = params.y;
+	y0 = y;
+	x0 = x;
 	dif_x = abs(x - params.x);
 	dif_y = abs(y - params.y);
 	delta = ((double)dif_y) / ((double)dif_x);
-	sign = (x > params.x ? 1 : -1);
-	delta *= (y > params.y ? 1 : -1);
+	sign = (params.x > x ? 1 : -1);
+	delta *= (params.y > y ? 1 : -1);
 	
-	while (params.x != x)
+	while (x0 != params.x)
 	{
-		// printf("%i\n", params.y);
-		// printf("%#x\n", params.col);
-		mlx_pixel_put(data.mlx, data.wnd, params.x, (int)(y0), ft_grad(params.col, dif_x, &params));
-		params.x += sign;
+		mlx_pixel_put(data.mlx, data.wnd, x0, (int)(y0), ft_grad(col, dif_x, &params));
+		x0 += sign;
 		y0 += delta;
+		dif_x--;
 	}
 	return (0);
 }
 
-static int		ft_finnish_y(t_params params, t_mlx data, int x, int y)
+static int		ft_finnish_y(t_params params, t_mlx data, int x, int y, int col)
 {
 	double 	delta;
 	double 	x0;
+	int		y0;
 	int 	sign;
 	int 	dif_x;
 	int 	dif_y;
 
-	
-	x0 = params.x;
+	x0 = x;
+	y0 = y;
 	dif_x = abs(x - params.x);
 	dif_y = abs(y - params.y);
 	delta = ((double)dif_x) / ((double)dif_y);
-	sign = (y > params.y ? 1 : -1);
-	delta *= (x > params.x ? 1 : -1);
-	while (params.y != y)
+	sign = (params.y > y ? 1 : -1);
+	delta *= (params.x > x ? 1 : -1);
+	while (y0 != params.y)
 	{
-		// printf("%i\n", params.y);
-		// printf("%#x\n", params.col);
-		mlx_pixel_put(data.mlx, data.wnd, (int)(x0), params.y, ft_grad(params.col, dif_y, &params));
-		params.y += sign;
+		mlx_pixel_put(data.mlx, data.wnd, (int)(x0), y0, ft_grad(col, dif_y, &params));
+		y0 += sign;
 		x0 += delta;
+		dif_y--;
 	}
 	return (0);
 }
 
-void	ft_print_line(t_params params, int x, int y, t_mlx data)
+void	ft_print_line(t_params params, int x, int y, t_mlx data, int col)
 {
-	
 	if (abs(x - params.x) >= abs(y - params.y))
-		ft_finnish_x(params, data, x, y);
+		ft_finnish_x(params, data, x, y, col);
 	else
-		ft_finnish_y(params, data, x, y);
+		ft_finnish_y(params, data, x, y, col);
 }
 
 void	ft_make_line(t_params **params, t_mlx data)
 {
 	int				x;
 	int				y;
+	int				col;
 	static int		y_move;
 	static int		x_move;
 
-	mlx_pixel_put(data.mlx, data.wnd, params[y_move][x_move].x, params[y_move][x_move].y, 
-	ft_grad(params[y_move][x_move].col, 1, &params[y_move][x_move]));
+	y = 0;
+	x = 0;
 	while (params[y_move])
 	{
 		while (!params[y_move][x_move].end)
 		{
 			x = params[y_move][x_move].x;
 			y = params[y_move][x_move].y;
-			// printf("%i\n", params[y_move][x_move].y);
-			// printf("%#x\n", params[y_move][x_move].col);
+			col = params[y_move][x_move].col;
 			if (params[y_move][x_move + 1].end && params[y_move + 1])
-				ft_print_line(params[y_move + 1][x_move], x, y, data);
+				ft_print_line(params[y_move + 1][x_move], x, y, data, col);
 			x_move++;
 			if (params[y_move][x_move].end)
 				break;
-			ft_print_line(params[y_move][x_move], x, y, data);
-			if (params[y_move + 1] && !params[y_move + 1][x_move - 1].end)
-				ft_print_line(params[y_move + 1][x_move - 1], x, y, data);
+			ft_print_line(params[y_move][x_move], x, y, data, col);
+			if (params[y_move + 1])
+				ft_print_line(params[y_move + 1][x_move - 1], x, y, data, col);
 		}
-		x_move = 0;
 		y_move++;
+		if (!params[y_move])
+			break;
+		x_move = 0;
 	}
-	y_move = 0;	
+	mlx_pixel_put(data.mlx, data.wnd, x, y, ft_grad(params[y_move - 1][x_move - 1].col, 1, &params[y_move - 1][x_move - 1]));
 }

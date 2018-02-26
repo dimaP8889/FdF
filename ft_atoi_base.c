@@ -79,6 +79,7 @@ int				ft_atoi_base(const char *str1, int base)
 	res = 0;
 	str = (unsigned char *)str1;
 	is_neg = 1;
+
 	while (split(*str))
 		str++;
 	if (*str == '-' && is_neg == 1)
@@ -93,6 +94,11 @@ int				ft_atoi_base(const char *str1, int base)
 		if (base != 10)
 			return (0);
 		str++;
+	}
+	if (!ft_correct(base, *str))
+	{
+		ft_printf("wrong input\n");
+		exit(1);
 	}
 	res = result(str, is_neg, base);
 	return (res);

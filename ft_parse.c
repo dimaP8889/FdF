@@ -24,10 +24,13 @@ void		ft_make_params(t_params *struct_params, char *str, char *find)
 	num = ft_strnew(find - str);
 	while (str[++count] != ',')
 		num[count] = str[count];
-	struct_params->y = ft_atoi_base(num, 10);
+	num[count] = 0;
+	struct_params->z = ft_atoi_base(num, 10);
 	struct_params->col = ft_atoi_base(col, 16);
+	free(num);
+	//col--;
+	//free(col);
 	// printf("%i\n", struct_params->y);
-	// printf("%#x\n", struct_params->col);
 }
 
 t_params 	*ft_make_coord(char **params, t_params *struct_params, int z)
@@ -40,13 +43,14 @@ t_params 	*ft_make_coord(char **params, t_params *struct_params, int z)
 	count = 0;
 	while (*params)
 	{
+
 		find_c = ft_strchr(*params, ',');
 		struct_params[count].x = x;
-		struct_params[count].z = z;
+		struct_params[count].y = z;
 		struct_params[count].end = 0;
 		if (!find_c)
 		{
-			struct_params[count].y = ft_atoi_base(*params, 10);
+			struct_params[count].z = ft_atoi_base(*params, 10);
 			struct_params[count].col = 0xFFFFFF;
 		}
 		else
@@ -55,12 +59,13 @@ t_params 	*ft_make_coord(char **params, t_params *struct_params, int z)
 			// printf("%i\n", struct_params[count].y);
 			// printf("%#x\n", struct_params[count].col);
 		}
+		//ft_check_valid()
 		x += 30;
 		count++;
 		(params)++;
 	}
 	struct_params[count].end = 1;
-	free(find_c);
+	//free(find_c);
 	return (struct_params);
 }
 
@@ -83,7 +88,7 @@ t_params	**ft_parse(int fd, int size)
 	int			counter;
 	char		*line;
 	char		**params;
-	t_params	**struct_params;
+	static t_params	**struct_params;
 
 	z = 0;
 	counter = 0;

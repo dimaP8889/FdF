@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+// почистить лики сделать доставалку след цвета ./ft_make_line 
+
 #include "fdf.h"
 
 int 	ft_find_size(int fd)
@@ -32,6 +34,7 @@ int 	ft_find_size(int fd)
 			find = ft_strchr(find, '\n');
 		}
 	}
+	free(find);
 	return (size);
 }
 
@@ -40,7 +43,7 @@ int 	ft_find_size(int fd)
 int 	main(int ac, char **av)
 {
 	ac = 0;
-	t_mlx		data;
+	static t_mlx		data;
 	int size;
 	int y;
 	int x;
@@ -55,18 +58,23 @@ int 	main(int ac, char **av)
 	close(fd);
 	fd = open(av[1], O_RDONLY);
 	data.params = ft_parse(fd, size);
-	while (data.params[y])
-	{
-		while (!data.params[y][x].end)
-		{
-			printf("%#x\n", data.params[y][x].col);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
+	// while(1)
+	// {
+	// 	while (data.params[y])
+	// 	{
+	// 		while (!data.params[y][x].end)
+	// 		{
+	// 			printf("%#x\n", data.params[y][x].col);
+	// 			x++;
+	// 		}
+	// 		x = 0;
+	// 		y++;
+	// 	}
+	// 	y = 0;
+	// }
 	close(fd);
 	ft_make_line(data.params, data);
+	//free_struct(&data);
 	//mlx_mouse_hook(data.wnd, ft_make_line, &data);
 	mlx_loop(data.mlx);
 	return (0);
