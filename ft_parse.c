@@ -6,7 +6,7 @@
 /*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 20:43:12 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/28 03:20:25 by dmitriy1         ###   ########.fr       */
+/*   Updated: 2018/02/28 11:34:26 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void		ft_make_params(t_params *struct_params, char *str, char *find)
 		num[count] = str[count];
 	num[count] = 0;
 	struct_params->z = ft_atoi_base(num, 10);
+	struct_params->z += (struct_params->z > 0 ? 100 : 0);
 	struct_params->col = ft_atoi_base(col, 16);
 	// if (ft_atoi_base(num, 10) == 9)
 	// {
@@ -62,6 +63,7 @@ t_params 	*ft_make_coord(char **params, t_params *struct_params, int z)
 		if (!find_c)
 		{
 			struct_params[count].z = ft_atoi_base(*params, 10);
+			struct_params[count].z += (struct_params[count].z > 0 ? 100 : 0);
 			struct_params[count].col = 0xFFFFFF;
 		}
 		else

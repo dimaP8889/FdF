@@ -6,7 +6,7 @@
 /*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/24 17:43:43 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/28 03:14:24 by dmitriy1         ###   ########.fr       */
+/*   Updated: 2018/02/28 11:48:36 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	ft_make_line(t_params **params, t_mlx data)
 
 	y = 0;
 	x = 0;
-	ft_print_params(params);
+	//ft_print_params(params);
 	while (params[y_move])
 	{
 		while (!params[y_move][x_move].end)
