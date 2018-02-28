@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 20:43:12 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/26 23:30:20 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/02/28 03:20:25 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void		ft_make_params(t_params *struct_params, char *str, char *find, int y)
+void		ft_make_params(t_params *struct_params, char *str, char *find)
 {
 	char	*num;
 	char	*col;
@@ -25,7 +25,7 @@ void		ft_make_params(t_params *struct_params, char *str, char *find, int y)
 	while (str[++count] != ',')
 		num[count] = str[count];
 	num[count] = 0;
-	struct_params->y = y - ft_atoi_base(num, 10);
+	struct_params->z = ft_atoi_base(num, 10);
 	struct_params->col = ft_atoi_base(col, 16);
 	// if (ft_atoi_base(num, 10) == 9)
 	// {
@@ -41,15 +41,13 @@ void		ft_make_params(t_params *struct_params, char *str, char *find, int y)
 
 // void	ft_make_central()
 
-t_params 	*ft_make_coord(char **params, t_params *struct_params, int z, t_sizes sizes)
+t_params 	*ft_make_coord(char **params, t_params *struct_params, int z)
 {
 	int 	x;
-	int		y;
 	int		count;
 	char	*find_c;
 
-	x = (2000 - (sizes.x - 1) * 30) / 2;
-	y = (1000 - sizes.y) / 2;
+	x = 0;
 	count = 0;
 	// printf("x: %i\n", x);
 	//printf("y: %i\n", y);
@@ -59,16 +57,16 @@ t_params 	*ft_make_coord(char **params, t_params *struct_params, int z, t_sizes 
 
 		find_c = ft_strchr(*params, ',');
 		struct_params[count].x = x;
-		struct_params[count].z = z;
+		struct_params[count].y = z;
 		struct_params[count].end = 0;
 		if (!find_c)
 		{
-			struct_params[count].y = y - ft_atoi_base(*params, 10);
+			struct_params[count].z = ft_atoi_base(*params, 10);
 			struct_params[count].col = 0xFFFFFF;
 		}
 		else
 		{
-			ft_make_params(&struct_params[count], *params, find_c, y);
+			ft_make_params(&struct_params[count], *params, find_c);
 		}
 		// ft_make_central(&struct_params[count]);
 		x += 30;
@@ -100,10 +98,10 @@ t_params	**ft_parse(int fd, t_sizes sizes)
 		get_next_line(fd, &line);
 		params = ft_strsplit(line, ' ');
 		struct_params[counter] = (t_params *)malloc(sizeof(t_params) * (sizes.x + 1));
-		struct_params[counter] = ft_make_coord(params, struct_params[counter], z, sizes);
-		z += 30;
+		struct_params[counter] = ft_make_coord(params, struct_params[counter], z);
 		counter++;
 		c--;
+		z += 30;
 	}
 	struct_params[counter] = NULL;
 	return (struct_params);

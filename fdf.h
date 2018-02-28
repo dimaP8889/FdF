@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 14:36:48 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/26 22:21:00 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/02/28 01:23:26 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "libft/includes/libft.h"
 # include "libft/includes/get_next_line.h"
 # include "libft/ft_printf/ft_printf.h"
+# define PI 	3.14159265358979323846
 
 typedef struct 	s_params
 {
@@ -35,6 +36,7 @@ typedef struct 	s_mlx
 {
 	void			*mlx;
 	void			*wnd;
+	void			*img;
 	t_params	**params;
 }				t_mlx;
 
@@ -63,5 +65,8 @@ int				ft_draw(int button, int x, int y, void *d);
 t_params		**ft_parse(int fd, t_sizes sizes);
 int				ft_atoi_base(const char *str1, int base);
 void			ft_make_line(t_params **params, t_mlx data);
+int				ft_rotate(int keycode, void *params);
+void			ft_make_central(t_params **params);
+void	ft_print_params(t_params **params);
 
 #endif
