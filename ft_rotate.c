@@ -6,7 +6,7 @@
 /*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/27 18:51:21 by dmitriy1          #+#    #+#             */
-/*   Updated: 2018/02/28 12:10:17 by dmitriy1         ###   ########.fr       */
+/*   Updated: 2018/02/28 12:19:37 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,9 +141,9 @@ int		ft_rotate(int keycode, void *params)
 
 	data = (t_mlx *)params;
 	if (keycode == 126 || keycode == 125)
-		data->params = ft_rotate_x(data->params, keycode == 126 ? 1 : -1);
+		data->params = ft_rotate_x(data->params, keycode == 126 ? -1 : 1);
 	if (keycode == 123 || keycode == 124)
-		data->params = ft_rotate_y(data->params, keycode == 124 ? 1 : -1);
+		data->params = ft_rotate_y(data->params, keycode == 124 ? -1 : 1);
 	//ft_make_central(data->params);
 	mlx_clear_window(data->mlx, data->wnd);
 	ft_make_line(data->params, *data);

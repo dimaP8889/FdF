@@ -6,7 +6,7 @@
 /*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 20:43:12 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/28 11:34:26 by dmitriy1         ###   ########.fr       */
+/*   Updated: 2018/02/28 12:14:45 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_params 	*ft_make_coord(char **params, t_params *struct_params, int z)
 	int		count;
 	char	*find_c;
 
-	x = 0;
+	x = 300;
 	count = 0;
 	// printf("x: %i\n", x);
 	//printf("y: %i\n", y);
@@ -92,7 +92,7 @@ t_params	**ft_parse(int fd, t_sizes sizes)
 	static t_params	**struct_params;
 
 	counter = 0;
-	z = 0;
+	z = 300;
 	c = sizes.z;
 	struct_params = (t_params **)malloc(sizeof(t_params *) * (sizes.y + 1));
 	while (c > 0)
