@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:13:34 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/28 02:30:52 by dmitriy1         ###   ########.fr       */
+/*   Updated: 2018/02/28 20:16:43 by dpogrebn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,28 @@ void 	ft_find_size(int fd, t_sizes *sizes)
 	char	*line;
 	char	**params;
 	int 	check;
-	int 	max_y;
+	int 	max_z;
 
-	max_y = 0;
+	max_z = 0;
 	while (get_next_line(fd, &line))
 	{
 		params = ft_strsplit(line, ' ');
 		while (*params)
 		{
-			max_y = ft_atoi_base(*params, 10);
-			if (max_y > sizes->y)
-				sizes->y = max_y;
+			max_z = ft_atoi_base(*params, 10);
+			if (max_z > sizes->z)
+				sizes->z = max_z;
 			(sizes->x)++;
 			params++;
 		}
 
-		if (sizes->z && sizes->x != check)
+		if (sizes->y && sizes->x != check)
 		{
 			ft_printf("wrong input\n");
 			exit(1);
 		}
 		check = sizes->x;
-		sizes->z++;
+		sizes->y++;
 		sizes->x = 0;
 	}
 	sizes->x = check;
@@ -57,9 +57,9 @@ void	ft_print_params(t_params **params)
 	{
 		while (!params[y][x].end)
 		{
-			printf("x :%i\n", params[y][x].x);
-			printf("y :%i\n", params[y][x].y);
-			printf("z :%i\n", params[y][x].z);
+			printf("x :%f\n", params[y][x].x);
+			printf("y :%f\n", params[y][x].y);
+			printf("z :%f\n", params[y][x].z);
 			x++;
 		}
 		x = 0;
@@ -113,6 +113,7 @@ int 	main(int ac, char **av)
 	ft_make_line(data.params, data);
 	//mlx_clear_window(data.mlx, data.wnd);
 	// mlx_expose_hook(data.wnd, lol1, &data);
+	//ft_print_params(data.params);
 	mlx_key_hook(data.wnd, ft_rotate, &data);
 	//mlx_clear_window(data.mlx, data.wnd);
 	// ft_make_line(data.params, data);
