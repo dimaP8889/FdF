@@ -35,7 +35,7 @@ static int		ft_finnish_x(t_params params, t_mlx data, t_params_prev params_prev)
 	delta = ((double)dif_y) / ((double)dif_x);
 	sign = (x1 > params_prev.x ? 1 : -1);
 	delta *= (y1 > params_prev.y ? 1 : -1);
-	while (x0 != x1)
+	while (floor(x0) != floor(x1))
 	{
 		mlx_pixel_put(data.mlx, data.wnd, x0, (int)(y0), ft_grad(params_prev.col, dif_x, &params));
 		x0 += sign;
@@ -68,7 +68,7 @@ static int		ft_finnish_y(t_params params, t_mlx data, t_params_prev params_prev)
 	delta = ((double)dif_x) / ((double)dif_y);
 	sign = (y1 > params_prev.y ? 1 : -1);
 	delta *= (x1 > params_prev.x ? 1 : -1);
-	while (y0 != y1)
+	while (floor(y0) != floor(y1))
 	{
 		mlx_pixel_put(data.mlx, data.wnd, (int)(x0), y0, ft_grad(params_prev.col, dif_y, &params));
 		y0 += sign;
@@ -92,7 +92,7 @@ void	ft_make_line(t_params **params, t_mlx data)
 	static int				x_move;
 	static t_params_prev	params_prev;
 
-	ft_print_params(params);
+	//ft_print_params(params);
 	while (params[y_move])
 	{
 		while (!params[y_move][x_move].end)
