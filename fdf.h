@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 14:36:48 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/28 20:15:14 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/03/02 13:35:15 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define FDF_H
 
 # include <math.h>
-# include <stdio.h>
+#include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include "minilibx/mlx.h"
@@ -67,7 +67,7 @@ typedef struct 	s_sizes
 	int				z;
 }				t_sizes;
 
-int 			ft_grad(int fin_col, int moves, t_params *data);
+int 			ft_grad(int fin_col, int moves, t_params *data, int check);
 int				ft_draw(int button, int x, int y, void *d);
 t_params		**ft_parse(int fd, t_sizes sizes);
 int				ft_atoi_base(const char *str1, int base);

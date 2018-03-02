@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_grad.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/24 17:40:06 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/26 23:15:58 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/03/02 13:41:23 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,34 +41,28 @@ static t_grad	*ft_find_delta(t_params *data, int moves, int start_col)
 	return (grad);
 }
 
-int 	ft_grad(int start_col, int moves, t_params *data)
+int 	ft_grad(int start_col, int moves, t_params *data, int check)
 {
 	static t_grad 		*grad;
 	static double 		r;
 	static double		g;
 	static double		b;
-	static int 			i;
 
-	if (!i)
+	if (!check)
 	{
-		// if (data->col != 0xffffff)
-		// {
-		// 	printf("num :%i\n", data->y);
-		// 	printf("col :%#x\n", data->col);
-		// 	printf("\n");
-		// }
 		grad = ft_find_delta(data, moves, start_col);
 		r = grad->r_start;
 		g = grad->g_start;
 		b = grad->b_start;
-		i++;
+		//printf("tets\n");
 	}
-	b += grad->b_delta;
-	r += grad->r_delta;
-	g += grad->g_delta;
+	else
+	{
+		b += grad->b_delta;
+		r += grad->r_delta;
+		g += grad->g_delta;
+	}
 	
-	if (moves == 1)
-		i = 0;
 	data->col = ft_make_col((int)b, (int)r, (int)g);
 	return (data->col);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fdf.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:13:34 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/28 20:16:43 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/03/02 12:22:25 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	ft_print_params(t_params **params)
 			printf("x :%f\n", params[y][x].x);
 			printf("y :%f\n", params[y][x].y);
 			printf("z :%f\n", params[y][x].z);
+			printf("col :%#x\n", params[y][x].col);
+			printf("\n");
 			x++;
 		}
 		x = 0;

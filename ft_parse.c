@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 20:43:12 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/28 20:14:54 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/03/02 12:26:33 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,6 @@ t_params	**ft_parse(int fd, t_sizes sizes)
 		y += 1;
 	}
 	struct_params[counter] = NULL;
+		//ft_print_params(struct_params);
 	return (struct_params);
 }

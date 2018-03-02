@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_make_line.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/24 17:43:43 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/28 20:21:52 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/03/02 13:42:50 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int		ft_finnish_x(t_params params, t_mlx data, t_params_prev params_prev)
 	int 	sign;
 	int 	dif_x;
 	int 	dif_y;
+	int		check;
 
 	y0 = params_prev.y;
 	x0 = params_prev.x;
@@ -30,17 +31,16 @@ static int		ft_finnish_x(t_params params, t_mlx data, t_params_prev params_prev)
 	
 	dif_x = fabs(x0 - x1);
 	dif_y = fabs(y0 - y1);
-	// printf("%i\n", dif_y);
-	// printf("%i\n", dif_x);
 	delta = ((double)dif_y) / ((double)dif_x);
 	sign = (x1 > params_prev.x ? 1 : -1);
 	delta *= (y1 > params_prev.y ? 1 : -1);
+	check = 0;
 	while (floor(x0) != floor(x1))
 	{
-		mlx_pixel_put(data.mlx, data.wnd, x0, (int)(y0), ft_grad(params_prev.col, dif_x, &params));
+		mlx_pixel_put(data.mlx, data.wnd, x0, (int)(y0), ft_grad(params_prev.col, dif_x, &params, check));
 		x0 += sign;
 		y0 += delta;
-		dif_x--;
+		check = 1;
 	}
 	return (0);
 }
@@ -55,6 +55,7 @@ static int		ft_finnish_y(t_params params, t_mlx data, t_params_prev params_prev)
 	int 	sign;
 	int 	dif_x;
 	int 	dif_y;
+	int		check;
 
 	y0 = params_prev.y;
 	x0 = params_prev.x;
@@ -63,17 +64,16 @@ static int		ft_finnish_y(t_params params, t_mlx data, t_params_prev params_prev)
 	
 	dif_x = fabs(x0 - x1);
 	dif_y = fabs(y0 - y1);
-	// printf("%i\n", dif_y);
-	// printf("%i\n", dif_x);
 	delta = ((double)dif_x) / ((double)dif_y);
 	sign = (y1 > params_prev.y ? 1 : -1);
 	delta *= (x1 > params_prev.x ? 1 : -1);
+	check = 0;
 	while (floor(y0) != floor(y1))
 	{
-		mlx_pixel_put(data.mlx, data.wnd, (int)(x0), y0, ft_grad(params_prev.col, dif_y, &params));
+		mlx_pixel_put(data.mlx, data.wnd, (int)(x0), y0, ft_grad(params_prev.col, dif_y, &params, check));
 		y0 += sign;
 		x0 += delta;
-		dif_y--;
+		check = 1;
 	}
 	return (0);
 }
@@ -92,7 +92,6 @@ void	ft_make_line(t_params **params, t_mlx data)
 	static int				x_move;
 	static t_params_prev	params_prev;
 
-	//ft_print_params(params);
 	while (params[y_move])
 	{
 		while (!params[y_move][x_move].end)
@@ -114,7 +113,7 @@ void	ft_make_line(t_params **params, t_mlx data)
 			break;
 		x_move = 0;
 	}
-	mlx_pixel_put(data.mlx, data.wnd, params_prev.x, params_prev.y, ft_grad(params[y_move - 1][x_move - 1].col, 1, &params[y_move - 1][x_move - 1]));
+	mlx_pixel_put(data.mlx, data.wnd, params_prev.x, params_prev.y, ft_grad(params[y_move - 1][x_move - 1].col, 1, &params[y_move - 1][x_move - 1], 0));
 	y_move = 0;
 	x_move = 0;
 }

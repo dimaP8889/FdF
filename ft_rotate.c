@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_rotate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/27 18:51:21 by dmitriy1          #+#    #+#             */
-/*   Updated: 2018/02/28 17:54:57 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/03/02 13:13:18 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ t_params	**ft_rotate_y(t_params** params, int way)
 	int				y;
 	double			matrix[3][3];
 
-	matrix[0][0] = cos((double)(10 * way / (double)(180 / M_PI)));
+	matrix[0][0] = cos((double)(5 * way / (double)(180 / M_PI)));
 	matrix[0][1] = 0;
-	matrix[0][2] = -sin((double)(10 * way / (double)(180 / M_PI)));// * way;
+	matrix[0][2] = -sin((double)(5 * way / (double)(180 / M_PI)));// * way;
 	matrix[1][0] = 0;
 	matrix[1][1] = 1;
 	matrix[1][2] = 0; //* way;
-	matrix[2][0] = sin((double)(10 * way / (double)(180 / M_PI))); //* way;
+	matrix[2][0] = sin((double)(5 * way / (double)(180 / M_PI))); //* way;
 	matrix[2][1] = 0; //* way;
-	matrix[2][2] = cos((double)(10 * way / (double)(180 / M_PI)));
+	matrix[2][2] = cos((double)(5 * way / (double)(180 / M_PI)));
 	x = 0;
 	y = 0;
 	
@@ -81,11 +81,11 @@ t_params	**ft_rotate_x(t_params** params, int way)
 	matrix[0][1] = 0;
 	matrix[0][2] = 0;
 	matrix[1][0] = 0;
-	matrix[1][1] = cos((double)(10 * way / (double)(180 / M_PI)));
-	matrix[1][2] = sin((double)(10 * way / (double)(180 / M_PI))); //* way;
+	matrix[1][1] = cos((double)(5 * way / (double)(180 / M_PI)));
+	matrix[1][2] = sin((double)(5 * way / (double)(180 / M_PI))); //* way;
 	matrix[2][0] = 0;
-	matrix[2][1] = -sin((double)(10 * way / (double)(180 / M_PI))); //* way;
-	matrix[2][2] = cos((double)(10 * way / (double)(180 / M_PI)));
+	matrix[2][1] = -sin((double)(5 * way / (double)(180 / M_PI))); //* way;
+	matrix[2][2] = cos((double)(5 * way / (double)(180 / M_PI)));
 	x = 0;
 	y = 0;
 	
@@ -99,8 +99,6 @@ t_params	**ft_rotate_x(t_params** params, int way)
 		x = 0;
 		y++;
 	}
-	// ft_print_params(params);
-	// printf("\n");
 	return (params);
 }
 
