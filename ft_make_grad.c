@@ -22,28 +22,27 @@ static int 	ft_make_col(int b_start, int r_start, int g_start)
 	return (ret);
 }
 
-static t_grad	*ft_find_delta(t_params data, int moves, int start_col)
+static t_grad	ft_find_delta(t_params data, int moves, int start_col)
 {
-	static t_grad *grad;
+	static t_grad grad;
 
-	grad = (t_grad *)malloc(sizeof(t_grad));
-	grad->b_to = (data.col) & 255;
-	grad->g_to = (data.col) >> 8;
-	grad->g_to &= 255;
-	grad->r_to = (data.col) >> 16;
-	grad->b_start = start_col & 255;
-	grad->g_start = start_col >> 8;
-	grad->g_start = grad->g_start & 255;
-	grad->r_start = start_col >> 16;
-	grad->r_delta = (((double)grad->r_to) - ((double)grad->r_start)) / (double)moves;
-	grad->g_delta = (((double)grad->g_to) - ((double)grad->g_start)) / (double)moves;
-	grad->b_delta = (((double)grad->b_to) - ((double)grad->b_start)) / (double)moves;
+	grad.b_to = (data.col) & 255;
+	grad.g_to = (data.col) >> 8;
+	grad.g_to &= 255;
+	grad.r_to = (data.col) >> 16;
+	grad.b_start = start_col & 255;
+	grad.g_start = start_col >> 8;
+	grad.g_start = grad.g_start & 255;
+	grad.r_start = start_col >> 16;
+	grad.r_delta = (((double)grad.r_to) - ((double)grad.r_start)) / (double)moves;
+	grad.g_delta = (((double)grad.g_to) - ((double)grad.g_start)) / (double)moves;
+	grad.b_delta = (((double)grad.b_to) - ((double)grad.b_start)) / (double)moves;
 	return (grad);
 }
 
 int 	ft_grad(int start_col, int moves, t_params data, int check)
 {
-	static t_grad 		*grad;
+	static t_grad 		grad;
 	static double 		r;
 	static double		g;
 	static double		b;
@@ -51,16 +50,15 @@ int 	ft_grad(int start_col, int moves, t_params data, int check)
 	if (!check)
 	{
 		grad = ft_find_delta(data, moves, start_col);
-		r = grad->r_start;
-		g = grad->g_start;
-		b = grad->b_start;
-		//printf("tets\n");
+		r = grad.r_start;
+		g = grad.g_start;
+		b = grad.b_start;
 	}
 	else
 	{
-		b += grad->b_delta;
-		r += grad->r_delta;
-		g += grad->g_delta;
+		b += grad.b_delta;
+		r += grad.r_delta;
+		g += grad.g_delta;
 	}
 	
 	data.col = ft_make_col((int)b, (int)r, (int)g);

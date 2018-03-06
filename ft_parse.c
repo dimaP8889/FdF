@@ -26,60 +26,58 @@ void		ft_make_params(t_params *struct_params, char *str, char *find)
 		num[count] = str[count];
 	num[count] = 0;
 	struct_params->z = ft_atoi_base(num, 10);
-	//struct_params->z += (struct_params->z > 0 ? 100 : 0);
 	struct_params->col = ft_atoi_base(col, 16);
-	// if (ft_atoi_base(num, 10) == 9)
-	// {
-	// 	printf("%i\n", struct_params->y);
-	// 	printf("%#x\n", struct_params->col);
-	// }
 	free(num);
 	free(col);
-	// printf("%i\n", struct_params->y);
-	//col--;
-	//free(col);
-	// printf("%i\n", struct_params->y);
 }
-
-// void	ft_make_central()
 
 t_params 	*ft_make_coord(char **params, t_params *struct_params, int y, int center)
 {
 	int 	x;
+	int		move;
 	int		count;
 	char	*find_c;
 
+	move = 0;
 	x =  -center;
 	count = 0;
-	while (*params)
+	while (params[move])
 	{
-		find_c = ft_strchr(*params, ',');
+		find_c = ft_strchr(params[move], ',');
 		struct_params[count].x = x;
 		struct_params[count].y = y;
 		struct_params[count].end = 0;
 		if (!find_c)
 		{
-			struct_params[count].z = ft_atoi_base(*params, 10);
-			//struct_params[count].z += (struct_params[count].z > 0 ? 100 : 0);
+			struct_params[count].z = ft_atoi_base(params[move], 10);
 			struct_params[count].col = 0xFFFFFF;
-			//free(find_c);
+			free(find_c);
 		}
 		else
 		{
-			ft_make_params(&struct_params[count], *params, find_c);
-			//free(find_c);
+			ft_make_params(&struct_params[count], params[move], find_c);
 		}
-		// ft_make_central(&struct_params[count]);
 		x += 1;
 		count++;
-		(params)++;
-		//free(find_c);
+		move++;
 	}
 	struct_params[count].end = 1;
 	return (struct_params);
 }
 
-//надо пофришить строки
+void	ft_free_struct(char **params)
+{
+	int count;
+
+	count = 0;
+	while (params[count])
+	{
+		free(params[count]);
+		count++;
+	}
+	free(params);
+}
+
 
 t_params	**ft_parse(int fd, t_sizes sizes)
 {
@@ -98,18 +96,14 @@ t_params	**ft_parse(int fd, t_sizes sizes)
 	{
 		get_next_line(fd, &line);
 		params = ft_strsplit(line, ' ');
+		free(line);
 		struct_params[counter] = (t_params *)malloc(sizeof(t_params) * (sizes.x + 1));
 		struct_params[counter] = ft_make_coord(params, struct_params[counter], y, sizes.x / 2);
+		ft_free_struct(params);
 		counter++;
-		free(params[counter]);
-		free(line);
 		c--;
 		y += 1;
 	}
 	struct_params[counter] = NULL;
-
-	free(params);
-	// free(line);
-		//ft_print_params(struct_params);
 	return (struct_params);
 }

@@ -20,7 +20,7 @@
 
 #include "fdf.h"
 
-static int		ft_finnish_x(t_params params, t_mlx *data, t_params_prev prev)
+static int		ft_finnish_x(t_params params, t_mlx *data, t_params prev)
 {
 	double 	delta;
 	double 	y0;
@@ -52,7 +52,7 @@ static int		ft_finnish_x(t_params params, t_mlx *data, t_params_prev prev)
 	return (0);
 }
 
-static int		ft_finnish_y(t_params params, t_mlx *data, t_params_prev prev)
+static int		ft_finnish_y(t_params params, t_mlx *data, t_params prev)
 {
 	double 	delta;
 	double 	x0;
@@ -84,13 +84,21 @@ static int		ft_finnish_y(t_params params, t_mlx *data, t_params_prev prev)
 	return (0);
 }
 
-void	ft_print_line(t_params params, t_params_prev prev, t_mlx *data)
+void	free_data(t_mlx *data)
 {
-	// printf("change_x_prev: %f\n", params_prev.change.x + params_prev.x);
-	// printf("x_start :%f\n",X0);
-	// printf("x_fin :%f\n",X1);
-	// printf("y_start :%f\n", Y0);
-	// printf("y_fin :%f\n", Y1);
+	int		y;
+
+	y = 0;
+	while (PARAMS[y])
+	{
+		free(PARAMS[y]);
+		y++;
+	}
+	free(PARAMS);
+}
+
+void	ft_print_line(t_params params, t_params prev, t_mlx *data)
+{
 	if (abs((int)(X1 - X0)) >= abs((int)(Y1 - Y0)))
 		ft_finnish_x(params, data, prev);
 	else
@@ -101,8 +109,9 @@ int	ft_make_line(int keycode, void *structure)
 {
 	static int				y_move;
 	static int				x_move;
-	static t_params_prev	prev;
+	static t_params			prev;
 	t_mlx					*data;
+	int							y;
  
 
 	data = (t_mlx *)structure;
@@ -132,6 +141,7 @@ int	ft_make_line(int keycode, void *structure)
 		x_move = 0;
 	}
 	mlx_pixel_put(MLX, WND, X0, Y0, ft_grad(PARAMS[y_move - 1][x_move - 1].col, 1, PARAMS[y_move - 1][x_move - 1], 0));
+	y = 0;
 	y_move = 0;
 	x_move = 0;
 	return (0);

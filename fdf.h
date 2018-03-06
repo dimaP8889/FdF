@@ -38,15 +38,6 @@ typedef struct 	s_change
 	int				centre;
 }				t_change;
 
-typedef struct 	s_params_prev
-{
-	double 			x;
-	double 			y;
-	double 			z;
-	int				col;
-	t_change		change;
-}				t_params_prev;
-
 typedef struct 	s_params
 {
 	double 			x;
@@ -88,5 +79,6 @@ int				ft_make_line(int keycode, void *structure);
 void			ft_change(t_mlx *data, int keycode);
 void			ft_make_central(t_params **params);
 void	ft_print_params(t_params **params);
+void			ft_free_params(char	***params);
 
 #endif
