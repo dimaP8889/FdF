@@ -41,6 +41,11 @@ t_params 	*ft_make_coord(char **params, t_params *struct_params, int y, int cent
 	move = 0;
 	x =  -center;
 	count = 0;
+	if (!params[move])
+	{
+		ft_printf("wrong input");
+		exit(1);
+	}
 	while (params[move])
 	{
 		find_c = ft_strchr(params[move], ',');
@@ -60,6 +65,11 @@ t_params 	*ft_make_coord(char **params, t_params *struct_params, int y, int cent
 		x += 1;
 		count++;
 		move++;
+		if (struct_params->col > 16777215)
+		{
+			ft_printf("wrong input");
+			exit(1);
+		}
 	}
 	struct_params[count].end = 1;
 	return (struct_params);

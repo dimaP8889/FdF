@@ -30,16 +30,23 @@ static	int		ft_correct(int base, int num)
 	coun = 0;
 	max_base_low = "0123456789abcdef";
 	max_base_high = "0123456789ABCDEF";
-	if (!num)
-		return (0);
+
+	if (!num || num == '\n' || num == 2)
+		return (1);
 	if (!ft_strchr(max_base_low, num) && !ft_strchr(max_base_high, num))
+	{
+		ft_printf("wrong input");
+		exit(1);
 		return (0);
+	}
 	if (ft_strchr(max_base_low, num))
 		coun = ft_strchr(max_base_low, num) - max_base_low;
 	else if (ft_strchr(max_base_high, num))
 		coun = ft_strchr(max_base_high, num) - max_base_high;
 	if (coun < base)
 		return (1);
+	ft_printf("wrong input");
+	exit(1);
 	return (0);
 }
 
@@ -64,9 +71,9 @@ static	int		result(unsigned char *str, int is_neg, int base)
 			res = (*(str++) - 55) + res * base;
 		else
 			res = (*(str++) - 87) + res * base;
+		if (!(*str) || (str[0] == ',' && base == 10))
+			break ;
 	}
-	// if (!ft_correct(base, *str) && *str)
-	// 	return (0);
 	return (is_neg * res);
 }
 
@@ -85,14 +92,22 @@ int				ft_atoi_base(const char *str1, int base)
 	if (*str == '-' && is_neg == 1)
 	{
 		if (base != 10)
+		{
+			ft_printf("wrong input");
+			exit(1);
 			return (0);
+		}
 		is_neg = -1;
 		str++;
 	}
 	if (*str == '+' && is_neg == 1)
 	{
 		if (base != 10)
+		{
+			ft_printf("wrong input");
+			exit(1);
 			return (0);
+		}
 		str++;
 	}
 	res = result(str, is_neg, base);

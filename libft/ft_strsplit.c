@@ -90,8 +90,7 @@ char			**ft_strsplit(char const *s, char c)
 	if (s)
 	{
 		coun = count(s, c);
-		split = (char **)malloc(sizeof(char *) * (coun));
-		if (split == NULL)
+		if (!(split = (char **)malloc(sizeof(char *) * (coun))))
 			return (NULL);
 		split1 = split;
 		while (--coun > 0)
@@ -99,6 +98,7 @@ char			**ft_strsplit(char const *s, char c)
 			i = 0;
 			str = make_word(s, &i, c);
 			*split = ft_strdup(str);
+			free(str);
 			split++;
 			s = s + i;
 		}

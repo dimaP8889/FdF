@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// почистить лики сделать доставалку след цвета ./ft_make_line 
+// 
 
 #include "fdf.h"
 
@@ -39,7 +39,7 @@ t_sizes 	ft_find_size(int fd, t_sizes sizes)
 			move++;
 		}
 		move = 0;
-		if (check != sizes.x && check)
+		if ((check != sizes.x && check))
 		{
 			ft_printf("wrong input");
 			exit(1);
@@ -49,12 +49,12 @@ t_sizes 	ft_find_size(int fd, t_sizes sizes)
 		sizes.x = 0;
 		free(params);
 	}
-	sizes.x = check;
-	if (!sizes.x || !sizes.y)
+	if (!check || !sizes.y)
 	{
 		ft_printf("wrong input");
 		exit(1);
 	}
+	sizes.x = check;
 	return (sizes);
 }
 
