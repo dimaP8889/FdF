@@ -6,7 +6,7 @@
 /*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/24 17:40:06 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/03/02 13:41:23 by dmitriy1         ###   ########.fr       */
+/*   Updated: 2018/03/02 23:18:32 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ static int 	ft_make_col(int b_start, int r_start, int g_start)
 	return (ret);
 }
 
-static t_grad	*ft_find_delta(t_params *data, int moves, int start_col)
+static t_grad	*ft_find_delta(t_params data, int moves, int start_col)
 {
 	static t_grad *grad;
 
 	grad = (t_grad *)malloc(sizeof(t_grad));
-	grad->b_to = (data->col) & 255;
-	grad->g_to = (data->col) >> 8;
+	grad->b_to = (data.col) & 255;
+	grad->g_to = (data.col) >> 8;
 	grad->g_to &= 255;
-	grad->r_to = (data->col) >> 16;
+	grad->r_to = (data.col) >> 16;
 	grad->b_start = start_col & 255;
 	grad->g_start = start_col >> 8;
 	grad->g_start = grad->g_start & 255;
@@ -41,7 +41,7 @@ static t_grad	*ft_find_delta(t_params *data, int moves, int start_col)
 	return (grad);
 }
 
-int 	ft_grad(int start_col, int moves, t_params *data, int check)
+int 	ft_grad(int start_col, int moves, t_params data, int check)
 {
 	static t_grad 		*grad;
 	static double 		r;
@@ -63,6 +63,6 @@ int 	ft_grad(int start_col, int moves, t_params *data, int check)
 		g += grad->g_delta;
 	}
 	
-	data->col = ft_make_col((int)b, (int)r, (int)g);
-	return (data->col);
+	data.col = ft_make_col((int)b, (int)r, (int)g);
+	return (data.col);
 }

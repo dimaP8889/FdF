@@ -6,7 +6,7 @@
 /*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 20:43:12 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/03/02 12:26:33 by dmitriy1         ###   ########.fr       */
+/*   Updated: 2018/03/05 20:10:16 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void		ft_make_params(t_params *struct_params, char *str, char *find)
 
 	count = -1;
 	find++;
-	col = find;
+	col = ft_strdup(find);
 	num = ft_strnew(find - str);
 	while (str[++count] != ',')
 		num[count] = str[count];
@@ -34,6 +34,7 @@ void		ft_make_params(t_params *struct_params, char *str, char *find)
 	// 	printf("%#x\n", struct_params->col);
 	// }
 	free(num);
+	free(col);
 	// printf("%i\n", struct_params->y);
 	//col--;
 	//free(col);
@@ -52,7 +53,6 @@ t_params 	*ft_make_coord(char **params, t_params *struct_params, int y, int cent
 	count = 0;
 	while (*params)
 	{
-
 		find_c = ft_strchr(*params, ',');
 		struct_params[count].x = x;
 		struct_params[count].y = y;
@@ -62,18 +62,20 @@ t_params 	*ft_make_coord(char **params, t_params *struct_params, int y, int cent
 			struct_params[count].z = ft_atoi_base(*params, 10);
 			//struct_params[count].z += (struct_params[count].z > 0 ? 100 : 0);
 			struct_params[count].col = 0xFFFFFF;
+			//free(find_c);
 		}
 		else
 		{
 			ft_make_params(&struct_params[count], *params, find_c);
+			//free(find_c);
 		}
 		// ft_make_central(&struct_params[count]);
 		x += 1;
 		count++;
 		(params)++;
+		//free(find_c);
 	}
 	struct_params[count].end = 1;
-	//free(find_c);
 	return (struct_params);
 }
 
@@ -83,8 +85,8 @@ t_params	**ft_parse(int fd, t_sizes sizes)
 {
 	int			counter;
 	int			y;
-	char		*line;
-	char		**params;
+	static char		*line;
+	static char		**params;
 	int			c;
 	static t_params	**struct_params;
 
@@ -99,10 +101,15 @@ t_params	**ft_parse(int fd, t_sizes sizes)
 		struct_params[counter] = (t_params *)malloc(sizeof(t_params) * (sizes.x + 1));
 		struct_params[counter] = ft_make_coord(params, struct_params[counter], y, sizes.x / 2);
 		counter++;
+		free(params[counter]);
+		free(line);
 		c--;
 		y += 1;
 	}
 	struct_params[counter] = NULL;
+
+	free(params);
+	// free(line);
 		//ft_print_params(struct_params);
 	return (struct_params);
 }
