@@ -8,9 +8,7 @@
 /*   Created: 2018/02/21 16:13:34 by dpogrebn          #+#    #+#             */
 /*   Updated: 2018/03/05 19:57:10 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
-/* ************************************************************************** */
-
-// 
+/* ************************************************************************** */ 
 
 #include "fdf.h"
 
@@ -91,7 +89,8 @@ int 	main(int ac, char **av)
 	fd = open(av[1], O_RDONLY);
 	data.params = ft_parse(fd, data.sizes);
 	close(fd);
-	ft_make_line(0, &data);
+	ft_first_pic(&data);
+	// mlx_clear_window(data.mlx, data.wnd);
 	mlx_key_hook(data.wnd, ft_make_line, &data);
 	mlx_loop(data.mlx);
 	return (0);

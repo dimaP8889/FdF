@@ -80,5 +80,6 @@ void			ft_change(t_mlx *data, int keycode);
 void			ft_make_central(t_params **params);
 void	ft_print_params(t_params **params);
 void			ft_free_params(char	***params);
+void			ft_first_pic(t_mlx *data);
 
 #endif

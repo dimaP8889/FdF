@@ -28,8 +28,8 @@ static int		ft_finnish_x(t_params params, t_mlx *data, t_params prev)
 	double	x1;
 	double	y1;
 	int 	sign;
-	int 	dif_x;
-	int 	dif_y;
+	double 	dif_x;
+	double	dif_y;
 	int		check;
 
 	y0 = Y0;
@@ -42,9 +42,9 @@ static int		ft_finnish_x(t_params params, t_mlx *data, t_params prev)
 	sign = (x1 > x0 ? 1 : -1);
 	delta *= (y1 > y0 ? 1 : -1);
 	check = 0;
-	while (floor(x0) != floor(x1))
+	while ((int)(x0 + 0.0000001) != (int)(x1 + 0.0000001))
 	{
-		mlx_pixel_put(MLX, WND, x0, (int)(y0), ft_grad(prev.col, dif_x, params, check));
+		mlx_pixel_put(MLX, WND, (int)(x0 + 0.0000001), (int)(y0 + 0.0000001), ft_grad(prev.col, dif_x, params, check));
 		x0 += sign;
 		y0 += delta;
 		check = 1;
@@ -60,8 +60,8 @@ static int		ft_finnish_y(t_params params, t_mlx *data, t_params prev)
 	double	x1;
 	double	y1;
 	int 	sign;
-	int 	dif_x;
-	int 	dif_y;
+	double 	dif_x;
+	double 	dif_y;
 	int		check;
 
 	y0 = Y0;
@@ -74,9 +74,9 @@ static int		ft_finnish_y(t_params params, t_mlx *data, t_params prev)
 	sign = (y1 > y0 ? 1 : -1);
 	delta *= (x1 > x0 ? 1 : -1);
 	check = 0;
-	while (floor(y0) != floor(y1))
+	while ((int)(y0 + 0.0000001) != (int)(y1 + 0.0000001))
 	{
-		mlx_pixel_put(MLX, WND, (int)(x0), y0, ft_grad(prev.col, dif_y, params, check));
+		mlx_pixel_put(MLX, WND, (int)(x0 + 0.0000001), (int)(y0 + 0.0000001), ft_grad(prev.col, dif_y, params, check));
 		y0 += sign;
 		x0 += delta;
 		check = 1;
@@ -140,7 +140,7 @@ int	ft_make_line(int keycode, void *structure)
 			break;
 		x_move = 0;
 	}
-	mlx_pixel_put(MLX, WND, X0, Y0, ft_grad(PARAMS[y_move - 1][x_move - 1].col, 1, PARAMS[y_move - 1][x_move - 1], 0));
+	mlx_pixel_put(MLX, WND, (int)(X0 + 0.0000001), (int)(Y0 + 0.0000001), ft_grad(PARAMS[y_move - 1][x_move - 1].col, 1, PARAMS[y_move - 1][x_move - 1], 0));
 	y = 0;
 	y_move = 0;
 	x_move = 0;

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#define ANGLE	(10 * way / (180 / M_PI))
+#define ANGLE	(angle * way / (180 / M_PI))
 #define	PARAM 	data->params[y][x]
 #define	PREV 	prev[y][x]
 
@@ -34,7 +34,7 @@ void	ft_count_coord(t_params params, t_change *change, t_params start, t_change 
 	change->z -= start.z;
 }
 
-void	ft_rotate_y(t_params params, int way, t_change *change, t_params start, t_change *check)
+void	ft_rotate_y(t_params params, int way, t_change *change, t_params start, t_change *check, int angle)
 {
 	change->y = change->y;
 	change->x = params.x * cos(ANGLE) + params.z * sin(ANGLE);
@@ -42,7 +42,7 @@ void	ft_rotate_y(t_params params, int way, t_change *change, t_params start, t_c
 	ft_count_coord(params, change, start, check);
 }
 
-void	ft_rotate_x(t_params params, int way, t_change *change, t_params start, t_change *check)
+void	ft_rotate_x(t_params params, int way, t_change *change, t_params start, t_change *check, int angle)
 {
 	change->x = change->x;
 	change->y = params.y * cos(ANGLE) + params.z * sin(ANGLE);
@@ -50,7 +50,7 @@ void	ft_rotate_x(t_params params, int way, t_change *change, t_params start, t_c
 	ft_count_coord(params, change, start, check);
 }
 
-void	ft_rotate_z(t_params params, int way, t_change *change, t_params start, t_change *check)
+void	ft_rotate_z(t_params params, int way, t_change *change, t_params start, t_change *check, int angle)
 {
 	change->z = change->z;
 	change->x = params.x * cos(ANGLE) - params.y * sin(ANGLE);
@@ -103,7 +103,7 @@ void		ft_change(t_mlx *data, int keycode)
 	static	int			zoom;
 	t_change		*change;
 	static t_change		move;
-
+	static	int			angle;
 	int			x;
 	int			y;
 
@@ -111,12 +111,18 @@ void		ft_change(t_mlx *data, int keycode)
 	change->x = 0;
 	change->y = 0;
 	change->z = 0;
+	if (!angle)
+		angle = 45;
+	else
+		angle = 1;
 	if (!zoom)
 		zoom = 30;
 	if (!prev)
 		prev = ft_set_f_p(prev, data);
 	x = 0;
 	y = 0;
+	if (keycode == 53)
+		exit(1);
 	if (keycode == 24)
 		zoom *= 1.5;
 	if (keycode == 27)
@@ -136,21 +142,21 @@ void		ft_change(t_mlx *data, int keycode)
 			ft_set_change(&PARAM.change, PREV, zoom, move);
 			if (keycode == 126 || keycode == 125)
 			{
-				ft_rotate_x(PREV, (keycode == 126 ? -1 : 1), &PARAM.change, PARAM, change);
+				ft_rotate_x(PREV, (keycode == 126 ? -1 : 1), &PARAM.change, PARAM, change, angle);
 				PREV.x += change->x;
 				PREV.y += change->y;
 				PREV.z += change->z;
 			}
 			else if (keycode == 123 || keycode == 124)
 			{
-				ft_rotate_y(PREV, (keycode == 123 ? -1 : 1), &PARAM.change, PARAM, change);
+				ft_rotate_y(PREV, (keycode == 123 ? -1 : 1), &PARAM.change, PARAM, change, angle);
 				PREV.x += change->x;
 				PREV.y += change->y;
 				PREV.z += change->z;
 			}
 			else if (keycode == 30 || keycode == 33)
 			{
-				ft_rotate_z(PREV, (keycode == 33 ? -1 : 1), &PARAM.change, PARAM, change);
+				ft_rotate_z(PREV, (keycode == 33 ? -1 : 1), &PARAM.change, PARAM, change, angle);
 				PREV.x += change->x;
 				PREV.y += change->y;
 				PREV.z += change->z;
