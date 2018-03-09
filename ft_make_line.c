@@ -6,7 +6,7 @@
 /*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/24 17:43:43 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/03/05 19:21:34 by dmitriy1         ###   ########.fr       */
+/*   Updated: 2018/03/09 01:16:48 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,18 @@ static int		ft_finnish_x(t_params params, t_mlx *data, t_params prev)
 	double 	delta;
 	double 	y0;
 	double	x0;
-	double	x1;
-	double	y1;
 	int 	sign;
-	double 	dif_x;
-	double	dif_y;
 	int		check;
 
 	y0 = Y0;
 	x0 = X0;
-	y1 = Y1;
-	x1 = X1;
-	dif_x = fabs(x0 - x1);
-	dif_y = fabs(y0 - y1);
-	delta = ((double)dif_y) / ((double)dif_x);
-	sign = (x1 > x0 ? 1 : -1);
-	delta *= (y1 > y0 ? 1 : -1);
+	delta = ((double)fabs(y0 - Y1)) / ((double)fabs(x0 - X1));
+	sign = (X1 > x0 ? 1 : -1);
+	delta *= (Y1 > y0 ? 1 : -1);
 	check = 0;
-	while ((int)(x0 + 0.0000001) != (int)(x1 + 0.0000001))
+	while ((int)(x0 + 0.0000001) != (int)(X1 + 0.0000001))
 	{
-		mlx_pixel_put(MLX, WND, (int)(x0 + 0.0000001), (int)(y0 + 0.0000001), ft_grad(prev.col, dif_x, params, check));
+		mlx_pixel_put(MLX, WND, (int)(x0 + 0.0000001), (int)(y0 + 0.0000001), ft_grad(prev.col, fabs(x0 - X1), params, check));
 		x0 += sign;
 		y0 += delta;
 		check = 1;
@@ -57,26 +49,18 @@ static int		ft_finnish_y(t_params params, t_mlx *data, t_params prev)
 	double 	delta;
 	double 	x0;
 	double	y0;
-	double	x1;
-	double	y1;
 	int 	sign;
-	double 	dif_x;
-	double 	dif_y;
 	int		check;
 
 	y0 = Y0;
 	x0 = X0;
-	y1 = Y1;
-	x1 = X1;
-	dif_x = fabs(x0 - x1);
-	dif_y = fabs(y0 - y1);
-	delta = ((double)dif_x) / ((double)dif_y);
-	sign = (y1 > y0 ? 1 : -1);
-	delta *= (x1 > x0 ? 1 : -1);
+	delta = ((double)fabs(x0 - X1)) / ((double)fabs(y0 - Y1));
+	sign = (Y1 > y0 ? 1 : -1);
+	delta *= (X1 > x0 ? 1 : -1);
 	check = 0;
-	while ((int)(y0 + 0.0000001) != (int)(y1 + 0.0000001))
+	while ((int)(y0 + 0.0000001) != (int)(Y1 + 0.0000001))
 	{
-		mlx_pixel_put(MLX, WND, (int)(x0 + 0.0000001), (int)(y0 + 0.0000001), ft_grad(prev.col, dif_y, params, check));
+		mlx_pixel_put(MLX, WND, (int)(x0 + 0.0000001), (int)(y0 + 0.0000001), ft_grad(prev.col, fabs(y0 - Y1), params, check));
 		y0 += sign;
 		x0 += delta;
 		check = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <dpogrebn@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/24 22:37:35 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/02/26 22:35:31 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/03/08 13:29:40 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,15 @@ static	int		result(unsigned char *str, int is_neg, int base)
 	return (is_neg * res);
 }
 
+void			ft_wrong_base(int base)
+{
+	if (base != 10)
+	{
+		ft_wrong_input();
+		return ;
+	}
+}
+
 int				ft_atoi_base(const char *str1, int base)
 {
 	unsigned char					*str;
@@ -86,28 +95,17 @@ int				ft_atoi_base(const char *str1, int base)
 	res = 0;
 	str = (unsigned char *)str1;
 	is_neg = 1;
-
 	while (split(*str))
 		str++;
 	if (*str == '-' && is_neg == 1)
 	{
-		if (base != 10)
-		{
-			ft_printf("wrong input");
-			exit(1);
-			return (0);
-		}
+		ft_wrong_base(base);
 		is_neg = -1;
 		str++;
 	}
 	if (*str == '+' && is_neg == 1)
 	{
-		if (base != 10)
-		{
-			ft_printf("wrong input");
-			exit(1);
-			return (0);
-		}
+		ft_wrong_base(base);
 		str++;
 	}
 	res = result(str, is_neg, base);

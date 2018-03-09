@@ -6,7 +6,7 @@
 /*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 14:36:48 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/03/05 18:58:32 by dmitriy1         ###   ########.fr       */
+/*   Updated: 2018/03/08 19:24:49 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct 	s_change
 	double			y;
 	double			z;
 	double			zm;
+	int 			angle;
+	int 			way;
 	int				centre;
 }				t_change;
 
@@ -78,8 +80,8 @@ int				ft_atoi_base(const char *str1, int base);
 int				ft_make_line(int keycode, void *structure);
 void			ft_change(t_mlx *data, int keycode);
 void			ft_make_central(t_params **params);
-void	ft_print_params(t_params **params);
 void			ft_free_params(char	***params);
 void			ft_first_pic(t_mlx *data);
+void			ft_wrong_input(void);
 
 #endif
