@@ -16,21 +16,20 @@ static	int		split(char c)
 {
 	if (c == '\n' || c == ' ' || c == '\t'
 		|| c == '\r' || c == '\f'
-		|| c == '\v')
+		|| c == '\v' || c == 2)
 		return (1);
 	return (0);
 }
 
 static	int		ft_correct(int base, int num)
 {
-	char 	*max_base_low;
-	char 	*max_base_high;
+	char	*max_base_low;
+	char	*max_base_high;
 	int		coun;
 
 	coun = 0;
 	max_base_low = "0123456789abcdef";
 	max_base_high = "0123456789ABCDEF";
-
 	if (!num || num == '\n' || num == 2)
 		return (1);
 	if (!ft_strchr(max_base_low, num) && !ft_strchr(max_base_high, num))
@@ -53,8 +52,8 @@ static	int		ft_correct(int base, int num)
 static	int		result(unsigned char *str, int is_neg, int base)
 {
 	unsigned long int		res;
-	res = 0;
 
+	res = 0;
 	if (str[0] == '0' && (str[1] == 'x' || str[1] == 'X') && base == 16)
 		str += 2;
 	while (ft_correct(base, *str) && *str)
@@ -77,7 +76,7 @@ static	int		result(unsigned char *str, int is_neg, int base)
 	return (is_neg * res);
 }
 
-void			ft_wrong_base(int base)
+static void		ft_wrong_base(int base)
 {
 	if (base != 10)
 	{

@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_first_pic.c                                     :+:      :+:    :+:   */
+/*   ft_free_struct.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/07 18:16:37 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/03/09 01:00:51 by dmitriy1         ###   ########.fr       */
+/*   Created: 2018/03/09 19:26:05 by dpogrebn          #+#    #+#             */
+/*   Updated: 2018/03/09 19:26:05 by dpogrebn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft_first_pic(t_mlx *data)
+void	ft_free_struct(char **param)
 {
-	static	int		coun;
+	int count;
 
-	if (!coun)
+	count = 0;
+	while (param[count])
 	{
-		ft_make_line(0, data);
-		coun = 1;
+		free(param[count]);
+		count++;
 	}
+	free(param);
 }

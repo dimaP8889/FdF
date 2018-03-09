@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-void		ft_make_params(t_params *struct_params, char *str, char *find)
+static void	ft_make_param(t_p *struct_p, char *str, char *find)
 {
 	char	*num;
 	char	*col;
@@ -25,95 +25,102 @@ void		ft_make_params(t_params *struct_params, char *str, char *find)
 	while (str[++count] != ',')
 		num[count] = str[count];
 	num[count] = 0;
-	struct_params->z = ft_atoi_base(num, 10);
-	struct_params->col = ft_atoi_base(col, 16);
+	struct_p->z = ft_atoi_base(num, 10);
+	struct_p->col = ft_atoi_base(col, 16);
 	free(num);
 	free(col);
 }
 
-char		*ft_find_c(char *params, t_params *struct_params, int x, int y)
+static char	*ft_find_c(char *param, t_p *struct_p, int x, int y)
 {
 	char *find_c;
 
-	find_c = ft_strchr(params, ',');
-	struct_params->x = x;
-	struct_params->y = y;
-	struct_params->end = 0;
+	find_c = ft_strchr(param, ',');
+	struct_p->x = x;
+	struct_p->y = y;
+	struct_p->end = 0;
+	if (!find_c)
+		struct_p->z = ft_atoi_base(param, 10);
 	return (find_c);
 }
 
-void		ft_not_find_c(t_params *struct_params, char *params, char **find_c)
+static void	ft_not_find_c(t_p **struct_p, int count, char **find_c, t_sizes sz)
 {
-	struct_params->z = ft_atoi_base(params, 10);
-	struct_params->col = 0xFFFFFF;
+	static double	prev;
+	static int	check;
+
+	// struct_p->z = ft_atoi_base(param, 10);
+	if (struct_p[count]->z == sz.min_z)
+		struct_p[count]->col = 0xFFFFFF;
+	else if (struct_p[count]->z == sz.max_z)
+		struct_p[count]->col = 0xFF0000;
+	else if (struct_p[count]->z == sz.mid_z + 1 || struct_p[count]->z == sz.mid_z - 1
+	|| struct_p[count]->z == sz.mid_z)
+		struct_p[count]->col = 0x0000FF;
+	if (check && prev > struct_p[count]->z)
+	{
+		ft_printf("test\n");
+		struct_p[count]->col = 0xFFFF00;
+		ft_printf("test1\n");
+	}
+	else if (check && struct_p[count - 1]->z > struct_p[count]->z)
+		struct_p[count - 1]->col = 0xFFFF00;
+	check = 1;
+	prev = struct_p[count]->z;
 	free(*find_c);
 }
 
-t_params 	*ft_make_coord(char **params, t_params *struct_params, int y, int center)
+static t_p	*ft_make_coord(char **param, t_p *struct_p, int y, t_sizes sizes)
 {
-	int 	x;
+	int		x;
 	int		move;
 	int		count;
 	char	*find_c;
 
 	move = 0;
-	x =  -center;
+	x = -sizes.x / 2;
 	count = 0;
-	if (!params[move])
+	if (!param[move])
 		ft_wrong_input();
-	while (params[move])
+	while (param[move])
 	{
-		find_c = ft_find_c(params[move], &struct_params[count], x, y);
+		find_c = ft_find_c(param[move], &struct_p[count], x, y);
 		if (!find_c)
-			ft_not_find_c(&struct_params[count], params[move], &find_c);
+			ft_not_find_c(&struct_p, count, &find_c, sizes);
 		else
-			ft_make_params(&struct_params[count], params[move], find_c);
+			ft_make_param(&struct_p[count], param[move], find_c);
 		x += 1;
 		count++;
 		move++;
-		if (struct_params->col > 16777215)
+		if (struct_p->col > 16777215)
 			ft_wrong_input();
 	}
-	struct_params[count].end = 1;
-	return (struct_params);
+	struct_p[count].end = 1;
+	return (struct_p);
 }
 
-void	ft_free_struct(char **params)
+t_p		**ft_parse(int fd, t_sizes sizes)
 {
-	int count;
-
-	count = 0;
-	while (params[count])
-	{
-		free(params[count]);
-		count++;
-	}
-	free(params);
-}
-
-
-t_params	**ft_parse(int fd, t_sizes sizes)
-{
-	int				counter;
+	int				coun;
 	int				y;
 	static char		*line;
-	static char		**params;
-	static t_params	**struct_params;
+	static char		**param;
+	static t_p		**struct_p;
 
-	counter = 0;
+	coun = 0;
 	y = -sizes.y / 2;
-	struct_params = (t_params **)malloc(sizeof(t_params *) * (sizes.y + 1));
-	while (counter < sizes.y)
+	struct_p = (t_p **)malloc(sizeof(t_p *) * (sizes.y + 1));
+	while (coun < sizes.y)
 	{
 		get_next_line(fd, &line);
-		params = ft_strsplit(line, ' ');
+		param = ft_strsplit(line, ' ');
 		free(line);
-		struct_params[counter] = (t_params *)malloc(sizeof(t_params) * (sizes.x + 1));
-		struct_params[counter] = ft_make_coord(params, struct_params[counter], y, sizes.x / 2);
-		ft_free_struct(params);
-		counter++;
+		struct_p[coun] = (t_p *)malloc(sizeof(t_p) * (sizes.x + 1));
+		struct_p[coun] = ft_make_coord(param, struct_p[coun], y, sizes);
+		ft_free_struct(param);
+		coun++;
 		y += 1;
 	}
-	struct_params[counter] = NULL;
-	return (struct_params);
+	struct_p[coun] = NULL;
+	return (struct_p);
 }

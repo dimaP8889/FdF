@@ -12,17 +12,17 @@
 
 #include "fdf.h"
 
-static int 	ft_make_col(int b_start, int r_start, int g_start)
+static int		ft_make_col(int b_start, int r_start, int g_start)
 {
 	int ret;
-	
+
 	g_start <<= 8;
 	r_start <<= 16;
 	ret = r_start | g_start | b_start;
 	return (ret);
 }
 
-static t_grad	ft_find_delta(t_params data, int moves, int start_col)
+static t_grad	ft_find_delta(t_p data, int mov, int start_col)
 {
 	static t_grad grad;
 
@@ -34,16 +34,16 @@ static t_grad	ft_find_delta(t_params data, int moves, int start_col)
 	grad.g_start = start_col >> 8;
 	grad.g_start = grad.g_start & 255;
 	grad.r_start = start_col >> 16;
-	grad.r_delta = (((double)grad.r_to) - ((double)grad.r_start)) / (double)moves;
-	grad.g_delta = (((double)grad.g_to) - ((double)grad.g_start)) / (double)moves;
-	grad.b_delta = (((double)grad.b_to) - ((double)grad.b_start)) / (double)moves;
+	grad.r_delta = (((double)grad.r_to) - ((double)grad.r_start)) / (double)mov;
+	grad.g_delta = (((double)grad.g_to) - ((double)grad.g_start)) / (double)mov;
+	grad.b_delta = (((double)grad.b_to) - ((double)grad.b_start)) / (double)mov;
 	return (grad);
 }
 
-int 	ft_grad(int start_col, int moves, t_params data, int check)
+int				ft_grad(int start_col, int moves, t_p data, int check)
 {
-	static t_grad 		grad;
-	static double 		r;
+	static t_grad		grad;
+	static double		r;
 	static double		g;
 	static double		b;
 
@@ -60,7 +60,6 @@ int 	ft_grad(int start_col, int moves, t_params data, int check)
 		r += grad.r_delta;
 		g += grad.g_delta;
 	}
-	
 	data.col = ft_make_col((int)b, (int)r, (int)g);
 	return (data.col);
 }
