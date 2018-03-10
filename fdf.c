@@ -6,11 +6,12 @@
 /*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 16:13:34 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/03/08 13:18:00 by dmitriy1         ###   ########.fr       */
+/*   Updated: 2018/03/10 15:06:47 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "stdio.h"
 
 void			ft_wrong_input(void)
 {
@@ -31,7 +32,6 @@ static void		ft_check_param(char *str, t_sizes *sizes)
 		sizes->max_z = max_z;
 	if (min_z < sizes->min_z)
 		sizes->min_z = min_z;
-	sizes->mid_z = (sizes->min_z + sizes->max_z) / 2;
 	(sizes->x)++;
 }
 
@@ -71,6 +71,7 @@ static t_sizes	ft_find_size(int fd, t_sizes sizes)
 	if (!check || !sizes.y)
 		ft_wrong_input();
 	sizes.x = check;
+	sizes.dif_z = sizes.max_z - sizes.min_z;
 	return (sizes);
 }
 

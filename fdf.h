@@ -6,7 +6,7 @@
 /*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 14:36:48 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/03/08 19:24:49 by dmitriy1         ###   ########.fr       */
+/*   Updated: 2018/03/10 15:06:02 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@
 
 typedef struct	s_sizes
 {
-	int			x;
-	int			y;
-	int			max_z;
-	int			min_z;
-	int			mid_z;
+	double		x;
+	double		y;
+	double		max_z;
+	double		min_z;
+	double		dif_z;
 }				t_sizes;
 
 typedef struct	s_change
@@ -91,5 +91,6 @@ void			ft_rotate_x(t_p *param, t_c *change, t_p start, t_c *check);
 void			ft_rotate_z(t_p *param, t_c *change, t_p start, t_c *check);
 t_p				**ft_last_cut(t_c *chg, int kd, t_mlx *data, t_p **pv);
 void			ft_free_struct(char **param);
+t_p				**ft_make_col_z(t_p **struct_p, t_sizes sizes);
 
 #endif

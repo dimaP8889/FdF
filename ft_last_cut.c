@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_last_cut.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpogrebn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dmitriy1 <dmitriy1@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/09 19:21:23 by dpogrebn          #+#    #+#             */
-/*   Updated: 2018/03/09 19:21:23 by dpogrebn         ###   ########.fr       */
+/*   Updated: 2018/03/10 16:25:13 by dmitriy1         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,22 @@ static t_p		**ft_set_f_p(t_p **prev, t_mlx *data)
 	return (prev);
 }
 
+static double		ft_find_zoom(t_sizes sizes)
+{
+	double zoom;
+	int	x;
+
+	x = 1;
+	zoom = 31;
+	while (((sizes.x) * zoom > 835 || (sizes.y) * zoom > 835 || (sizes.dif_z) * zoom > 835)
+	&& zoom > 2)
+	{
+		x++;
+		zoom /= 1.5;
+	}
+	return (zoom);
+}
+
 static void		ft_choose_param(t_c *change, int keycode, t_mlx *data)
 {
 	if (keycode == 125 || keycode == 124 || keycode == 30)
@@ -55,12 +71,12 @@ static void		ft_choose_param(t_c *change, int keycode, t_mlx *data)
 	else
 		change->angle = 5;
 	if (!change->zm)
-		change->zm = 30;
+		change->zm = ft_find_zoom(data->sizes);
 	if (keycode == 53)
 		exit(1);
-	if (keycode == 24 && change->zm < 130)
+	if (keycode == 24 && change->zm < ft_find_zoom(data->sizes) * 10)
 		change->zm *= 1.5;
-	if (keycode == 27 && change->zm > 10)
+	if (keycode == 27 && change->zm > ft_find_zoom(data->sizes) / 3)
 		change->zm /= 1.5;
 	if (keycode == 13)
 		data->move.y -= change->zm;
