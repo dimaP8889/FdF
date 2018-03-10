@@ -11,8 +11,10 @@
 #******************************************************************************#
 
 NAME = ./fdf
-SRC = fdf.c
-OBJ = fdf.o
+LIBA = libft/libft.a
+SRC = fdf.c ft_atoi_base.c ft_make_grad.c ft_make_line.c ft_parse.c ft_change.c ft_first_pic.c\
+ft_free_struct.c ft_last_cut.c ft_put_last.c ft_rotate.c ft_set_and_first.c ft_make_col_z.c
+OBJ = fdf.o ft_atoi_base.o ft_make_grad.o ft_make_line.o ft_parse.o ft_change.o
 HEADER = fdf.h
 FLAGS = -Wall -Wextra -Werror
 FLAGS_MLX = -lmlx
@@ -22,4 +24,4 @@ FLAG_FRAME = -framework
 FRAMEWORK = $(FLAG_FRAME) OpenGL $(FLAG_FRAME) AppKit
 
 comp:
-	$(CC) $(FLAGS) -o $(NAME) $(SRC) -L $(MLX) $(FLAGS_MLX) $(FRAMEWORK)
+	$(CC) $(FLAGS) -o $(NAME) $(SRC) $(LIBA) -L $(MLX) $(FLAGS_MLX) $(FRAMEWORK)
