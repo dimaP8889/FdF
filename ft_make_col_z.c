@@ -11,13 +11,16 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "stdio.h"
 
 static void		ft_change_col(t_p **struct_p, int x, int y, t_sizes sz)
 {
-	if (struct_p[y][x].z == sz.max_z)
+	if (struct_p[y][x].z == sz.max_z && struct_p[y][x].z != sz.min_z)
 		struct_p[y][x].col = 0xFF0000;
 	else if (struct_p[y][x].z != sz.min_z)
 		struct_p[y][x].col = 0x0000FF;
+	if (struct_p[y][x].z == 0)
+		struct_p[y][x].col = 0xFFFFFF;
 	if (x > 0 && struct_p[y][x - 1].z > struct_p[y][x].z)
 		struct_p[y][x].col = 0x00FF00;
 	if (y > 0 && struct_p[y - 1][x].z > struct_p[y][x].z)
@@ -28,7 +31,7 @@ static void		ft_change_col(t_p **struct_p, int x, int y, t_sizes sz)
 		struct_p[y - 1][x].col = 0x00FF00;
 }
 
-t_p		**ft_make_col_z(t_p **struct_p, t_sizes sz)
+t_p				**ft_make_col_z(t_p **struct_p, t_sizes sz)
 {
 	int x;
 	int y;
@@ -41,7 +44,7 @@ t_p		**ft_make_col_z(t_p **struct_p, t_sizes sz)
 		{
 			if (struct_p[y][x].col == 0xFFFFFF)
 				ft_change_col(struct_p, x, y, sz);
-		x++;
+			x++;
 		}
 		x = 0;
 		y++;

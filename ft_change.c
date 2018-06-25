@@ -54,7 +54,7 @@ void		ft_c(t_mlx *data, int keycode)
 	static int		x;
 	int				y;
 
-	prev = ft_last_cut(&change, keycode, data, prev);
+	prev = ft_keycode(&change, keycode, data, prev);
 	y = -1;
 	while (data->param[++y])
 	{

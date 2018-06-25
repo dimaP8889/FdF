@@ -78,7 +78,7 @@ static t_p	*ft_make_coord(char **param, t_p *struct_p, int y, t_sizes sizes)
 	return (struct_p);
 }
 
-t_p		**ft_parse(int fd, t_sizes sizes)
+t_p			**ft_parse(int fd, t_sizes sizes)
 {
 	int				coun;
 	int				y;

@@ -82,7 +82,7 @@ static int		ft_finnish_y(t_p param, t_mlx *data, t_p *prev)
 	return (0);
 }
 
-void			ft_print_line(t_p param, t_p *prev, t_mlx *data)
+static void		ft_print_line(t_p param, t_p *prev, t_mlx *data)
 {
 	if (abs((int)(X1 - X0)) >= abs((int)(Y1 - Y0)))
 		ft_finnish_x(param, data, prev);
@@ -90,7 +90,7 @@ void			ft_print_line(t_p param, t_p *prev, t_mlx *data)
 		ft_finnish_y(param, data, prev);
 }
 
-int				ft_print(t_p *prev, t_mlx *data, int *x_move, int y_move)
+static int		ft_print(t_p *prev, t_mlx *data, int *x_move, int y_move)
 {
 	prev->x = PARAMS[y_move][*x_move].x;
 	prev->y = PARAMS[y_move][*x_move].y;

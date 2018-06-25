@@ -12,27 +12,27 @@
 
 #include "ft_printf.h"
 
-void	ft_print_num(t_printf *params)
+void	ft_print_num(t_printf *param)
 {
 	int	count;
 
 	count = 0;
-	params->out = ft_strjoin_free(&params->out, params->out_num);
-	if (!params->precision && params->check_zero
-	&& !params->this_is_funny_o_sharp && ft_strcmp(params->convers, "p"))
+	param->out = ft_strjoin_free(&param->out, param->out_num);
+	if (!param->precision && param->check_zero
+	&& !param->this_is_funny_o_sharp && ft_strcmp(param->convers, "p"))
 	{
-		while (params->out[count] != '0')
+		while (param->out[count] != '0')
 			count++;
-		if (params->out[count - 1] == '+')
-			params->out[count] = '+';
+		if (param->out[count - 1] == '+')
+			param->out[count] = '+';
 		else
-			params->out[count] = ' ';
-		if (params->width < 1)
+			param->out[count] = ' ';
+		if (param->width < 1)
 		{
-			params->out++;
-			params->tihs = 1;
+			param->out++;
+			param->tihs = 1;
 		}
 	}
-	ft_putstr(params->out);
-	params->return_val = ft_strlen(params->out) + ft_strlen(params->print);
+	ft_putstr(param->out);
+	param->return_val = ft_strlen(param->out) + ft_strlen(param->print);
 }

@@ -28,11 +28,12 @@ static void		ft_check_param(char *str, t_sizes *sizes)
 	min_z = 0;
 	max_z = ft_atoi_base(str, 10);
 	min_z = max_z;
-	if (max_z > sizes->max_z)
+	if (!sizes->max_z || max_z > sizes->max_z)
 		sizes->max_z = max_z;
-	if (min_z < sizes->min_z)
+	if (!sizes->min_z || min_z < sizes->min_z)
 		sizes->min_z = min_z;
-	(sizes->x)++;
+	if (ft_isdigit(*str) || *str == 2 || *str == '-')
+		(sizes->x)++;
 }
 
 static int		ft_read(char **str, t_sizes *sizes, int check)
@@ -67,11 +68,17 @@ static t_sizes	ft_find_size(int fd, t_sizes sizes)
 
 	check = 0;
 	while (get_next_line(fd, &line))
+	{
+		if ((line[0] == 2 || line[0] == 0) && line[1] == 0)
+			ft_wrong_input();
 		check = ft_read(&line, &sizes, check);
+	}
 	if (!check || !sizes.y)
 		ft_wrong_input();
 	sizes.x = check;
 	sizes.dif_z = sizes.max_z - sizes.min_z;
+	if (!sizes.x || !sizes.y)
+		ft_wrong_input();
 	return (sizes);
 }
 
@@ -89,13 +96,15 @@ int				main(int ac, char **av)
 	data.mlx = mlx_init();
 	data.wnd = mlx_new_window(data.mlx, 1000, 1000, "mlx 42");
 	fd = open(av[1], O_RDONLY);
+	if (fd == -1)
+		return (0);
 	data.sizes = ft_find_size(fd, sizes);
 	close(fd);
 	fd = open(av[1], O_RDONLY);
 	data.param = ft_parse(fd, data.sizes);
 	close(fd);
 	ft_first_pic(&data);
-	mlx_hook (data.wnd, 2, 5, ft_make_line,  &data);
+	mlx_hook(data.wnd, 2, 5, ft_make_line, &data);
 	mlx_loop(data.mlx);
 	return (0);
 }

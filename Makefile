@@ -12,16 +12,29 @@
 
 NAME = ./fdf
 LIBA = libft/libft.a
-SRC = fdf.c ft_atoi_base.c ft_make_grad.c ft_make_line.c ft_parse.c ft_change.c ft_first_pic.c\
-ft_free_struct.c ft_last_cut.c ft_put_last.c ft_rotate.c ft_set_and_first.c ft_make_col_z.c
-OBJ = fdf.o ft_atoi_base.o ft_make_grad.o ft_make_line.o ft_parse.o ft_change.o
+SRC = fdf.c ft_atoi_base.c ft_make_grad.c ft_make_line.c ft_parse.c \
+ft_change.c ft_first_pic.c ft_free_struct.c ft_keycode.c ft_put_last.c \
+ft_rotate.c ft_set_and_first.c ft_make_col_z.c
 HEADER = fdf.h
-FLAGS = -Wall -Wextra -Werror
-FLAGS_MLX = -lmlx
-MLX = minilibx/
+FL = -Wall -Wextra -Werror
+F_MLX = -lmlx
+MLX = /usr/local/lib/
 CC = gcc
 FLAG_FRAME = -framework
-FRAMEWORK = $(FLAG_FRAME) OpenGL $(FLAG_FRAME) AppKit
+FW = $(FLAG_FRAME) OpenGL $(FLAG_FRAME) AppKit
+MLX_HEAD = /usr/local/include
 
-comp:
-	$(CC) $(FLAGS) -o $(NAME) $(SRC) $(LIBA) -L $(MLX) $(FLAGS_MLX) $(FRAMEWORK)
+all: $(NAME)
+
+$(NAME):
+	@$(MAKE) -C libft
+	@$(CC) $(FL) -I MLX_HEAD -o $(NAME) $(SRC) $(LIBA) -L $(MLX) $(F_MLX) $(FW)
+
+clean:
+	@$(MAKE) -C libft clean
+
+fclean: clean
+	@rm -rf $(NAME)
+	@$(MAKE) -C libft fclean
+
+re: fclean all

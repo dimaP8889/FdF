@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include "stdio.h"
 
 static	int		split(char c)
 {
@@ -34,8 +35,7 @@ static	int		ft_correct(int base, int num)
 		return (1);
 	if (!ft_strchr(max_base_low, num) && !ft_strchr(max_base_high, num))
 	{
-		ft_printf("wrong input");
-		exit(1);
+		ft_wrong_input();
 		return (0);
 	}
 	if (ft_strchr(max_base_low, num))
@@ -44,8 +44,7 @@ static	int		ft_correct(int base, int num)
 		coun = ft_strchr(max_base_high, num) - max_base_high;
 	if (coun < base)
 		return (1);
-	ft_printf("wrong input");
-	exit(1);
+	ft_wrong_input();
 	return (0);
 }
 
@@ -58,12 +57,10 @@ static	int		result(unsigned char *str, int is_neg, int base)
 		str += 2;
 	while (ft_correct(base, *str) && *str)
 	{
-		if ((res > 922337203685477580 || (res == 922337203685477580
-		&& (*str - '0') > 7)) && is_neg == 1)
-			return (-1);
-		else if ((res > 922337203685477580 || (res == 922337203685477580
-		&& (*str - '0') > 8)) && is_neg == -1)
-			return (0);
+		if (res > 2147483647 && is_neg == 1)
+			ft_wrong_input();
+		else if (res > 2147483648 && is_neg == -1)
+			ft_wrong_input();
 		if (ft_isdigit(*str))
 			res = (*(str++) - '0') + res * base;
 		else if (*str >= 'A' && *str <= 'F')

@@ -16,7 +16,7 @@
 # include <math.h>
 # include <stdlib.h>
 # include <fcntl.h>
-# include "minilibx/mlx.h"
+# include "mlx.h"
 # include "libft/includes/libft.h"
 # include "libft/includes/get_next_line.h"
 # include "libft/ft_printf/ft_printf.h"
@@ -89,7 +89,7 @@ int				ft_set_and_fir(t_p *param, t_c *change, t_p start, t_c *check);
 void			ft_rotate_y(t_p *param, t_c *change, t_p start, t_c *check);
 void			ft_rotate_x(t_p *param, t_c *change, t_p start, t_c *check);
 void			ft_rotate_z(t_p *param, t_c *change, t_p start, t_c *check);
-t_p				**ft_last_cut(t_c *chg, int kd, t_mlx *data, t_p **pv);
+t_p				**ft_keycode(t_c *chg, int kd, t_mlx *data, t_p **pv);
 void			ft_free_struct(char **param);
 t_p				**ft_make_col_z(t_p **struct_p, t_sizes sizes);
 
